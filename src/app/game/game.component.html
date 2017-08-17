@@ -1,0 +1,20 @@
+<div>
+  <p>
+    Schwierigkeit:
+    <md-slider (change)="changeDifficulty()" [(ngModel)]="difficulty" min="2" max="{{maxLevel}}" step="1"></md-slider>
+  </p>
+  <p>
+    Zeit:
+    {{ time | exacttime:success }}
+  </p>
+</div>
+
+<md-grid-list cols="4" rowHeight="1:1">
+  <md-grid-tile *ngFor="let card of deck | shuffle">
+    <button class="card {{card.status}}" (click)="flipCard(card)">
+      <span class="front">{{card.motive}}</span>
+      <span class="back">❓</span>
+    </button>
+  </md-grid-tile>
+</md-grid-list>
+

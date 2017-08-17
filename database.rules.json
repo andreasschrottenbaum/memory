@@ -1,0 +1,16 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "auth != null",
+    "games": {
+      "$gameid": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() || data.child('player').val() === auth.uid) && newData.hasChild('player')",
+        "player": {
+          ".write": "newData.val() === auth.uid"
+        }
+      },
+      ".indexOn": "difficulty"
+    }
+  }
+}

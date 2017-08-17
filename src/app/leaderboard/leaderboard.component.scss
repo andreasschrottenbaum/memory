@@ -1,0 +1,32 @@
+h2 {
+    margin-bottom: 0;
+}
+
+md-table {
+    img {
+        height: 1.2em;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+}
+
+img.networkLogo {
+    height: 1.2em;
+    vertical-align: middle;
+}
+
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2) {
+    flex: 0 0 100px;
+}
+
+
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+    flex: 0 0 48px;
+}
+
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4) {
+    flex: 0 0 40px;
+}

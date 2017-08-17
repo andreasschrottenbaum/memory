@@ -1,0 +1,52 @@
+<h2>Bestenliste</h2>
+
+<md-table [dataSource]="dataSource" mdSort>
+    <ng-container cdkColumnDef="user">
+        <md-header-cell *cdkHeaderCellDef> Name </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            <img src="{{ row.user.pictureURL }}" alt="">
+            {{ row.user.name }}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="time">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Zeit </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{ row.time | exacttime:true }}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="moves">
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Züge </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            {{ row.moves }}
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="share">
+        <md-header-cell *cdkHeaderCellDef> &nbsp; </md-header-cell>
+        <md-cell *cdkCellDef="let row">
+            <button md-icon-button *ngIf="row.user.uid === (user | async)?.uid" [mdMenuTriggerFor]="shareMenu" aria-label="Ergebnis teilen" (click)="share('google', row)">
+                <md-icon>share</md-icon>
+            </button>
+
+            <md-menu #shareMenu="mdMenu">
+                <button md-menu-item (click)="share('facebook', row)">
+                    <img class="networkLogo" src="../../assets/facebook-logo.svg" alt="">
+                    Facebook
+                </button>
+                <a md-menu-item (click)="share('twitter', row)">
+                    <img class="networkLogo" src="../../assets/twitter-logo.svg" alt="">
+                    Twitter
+                </a>
+                <button md-menu-item id="googleShare">
+                    <img class="networkLogo" src="../../assets/google-logo.svg" alt="">
+                    Google
+                </button>
+            </md-menu>
+        </md-cell>
+    </ng-container>
+
+    <md-header-row *cdkHeaderRowDef="['user', 'time', 'moves', 'share']"></md-header-row>
+    <md-row *cdkRowDef="let row; columns: ['user', 'time', 'moves', 'share'];"></md-row>
+</md-table>
