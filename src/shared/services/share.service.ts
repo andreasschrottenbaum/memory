@@ -31,7 +31,7 @@ export class ShareService {
           calltoactionlabel: 'PLAY',
           calltoactionurl: url,
           calltoactiondeeplinkid: '/',
-          callback: () => console.log('render')
+          callback: () => { }
         };
 
         (<any>window).gapi.interactivepost.render('googleShare', options);

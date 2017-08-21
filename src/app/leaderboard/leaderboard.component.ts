@@ -16,9 +16,9 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./leaderboard.component.scss']
 })
 export class LeaderboardComponent {
-  difficulty;
-  user;
-  data;
+  public difficulty;
+  public user;
+  public data;
 
   constructor(private difficultyService: DifficultyService,
               private shareService: ShareService,
@@ -51,7 +51,7 @@ export class LeaderboardComponent {
     }
   };
 
-  sortByMoves = (data: any[]) => {
+  sortByMoves(data: any[]): any[] {
     return data.sort((obj1, obj2) => {
       if (obj1.moves < obj2.moves) { return -1; }
       if (obj1.moves > obj2.moves) { return 1; }
