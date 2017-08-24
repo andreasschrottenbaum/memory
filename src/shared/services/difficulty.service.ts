@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { motives } from '../data/motives';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -12,7 +14,10 @@ export class DifficultyService {
     if (difficulty && difficulty >= 2 && difficulty <= 13) {
       this._difficulty.next(difficulty);
     } else {
-      this._difficulty.next(2);
+      // set random difficulty
+      var diff = Math.ceil(Math.random() * motives.length / 2) * 2;
+
+      this._difficulty.next(diff);
     }
   }
 
