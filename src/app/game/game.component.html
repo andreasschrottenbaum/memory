@@ -9,8 +9,8 @@
   </p>
 </div>
 
-<md-grid-list cols="4" rowHeight="1:1">
-  <md-grid-tile *ngFor="let card of deck | shuffle">
+<md-grid-list cols="4" rowHeight="1:1" @list>
+  <md-grid-tile @cards *ngFor="let card of deck | shuffle">
     <button class="card {{card.status}}" (click)="flipCard(card)">
       <span class="front">{{card.motive}}</span>
       <span class="back">❓</span>

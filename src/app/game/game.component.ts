@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, transition, style, animate, query, stagger, animateChild } from '@angular/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from '../app.component';
 
@@ -14,6 +16,28 @@ import { Card } from '../../shared/classes/card';
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
+  animations: [
+    trigger('cards', [
+      transition(':enter', [
+        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+        animate('1s 1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+          style({ transform: 'scale(1)', opacity: 1 }))  // final
+      ]),
+      transition(':leave', [
+        style({ transform: 'scale(1)', opacity: 1, height: '*' }),
+        animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+        style({ 
+          transform: 'scale(0.5)', opacity: 0, 
+          height: '0px', margin: '0px' 
+        })) 
+      ])
+    ]),
+    trigger('list', [
+      transition(':enter', [
+        query('@cards', stagger(300, animateChild()))
+      ])
+    ])
+  ]
 })
 export class GameComponent implements OnInit {
   private _moves: number;
@@ -28,6 +52,8 @@ export class GameComponent implements OnInit {
   public deck: Card[] = [];
   public maxLevel = motives.length;
   public success: boolean;
+
+
 
   constructor(public app: AppComponent,
               public difficultyService: DifficultyService,
