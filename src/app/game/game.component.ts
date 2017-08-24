@@ -17,11 +17,12 @@ import { Card } from '../../shared/classes/card';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
   animations: [
+    // code from https://medium.com/@gerard.sans/angular-applying-motion-principles-to-a-list-d5cdd35c899e
     trigger('cards', [
       transition(':enter', [
-        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+        style({ transform: 'scale(0.5)', opacity: 0, left: 0 }),  // initial
         animate('1s 1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
-          style({ transform: 'scale(1)', opacity: 1 }))  // final
+          style({ transform: 'scale(1)', opacity: 1, left: '*' }))  // final
       ]),
       transition(':leave', [
         style({ transform: 'scale(1)', opacity: 1, height: '*' }),
@@ -34,7 +35,7 @@ import { Card } from '../../shared/classes/card';
     ]),
     trigger('list', [
       transition(':enter', [
-        query('@cards', stagger(300, animateChild()))
+        query('@cards', stagger(200, animateChild()))
       ])
     ])
   ]
