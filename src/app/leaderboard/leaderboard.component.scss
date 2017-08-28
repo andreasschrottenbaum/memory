@@ -30,3 +30,8 @@ img.networkLogo {
 .mat-header-cell:nth-child(4) {
     flex: 0 0 40px;
 }
+
+md-table {
+    max-height: 80vh;
+    overflow-y: auto;
+}

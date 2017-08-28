@@ -84,6 +84,7 @@ export class GameComponent implements OnInit {
       return;
     }
 
+    // Start the timer
     if (this._timer === null) {
       this._starttime = new Date();
       this._timer = setInterval(_ => {
@@ -100,6 +101,7 @@ export class GameComponent implements OnInit {
 
     this._moves++;
 
+    // Match
     if (this._currentCard.motive === card.motive) {
       this._currentCard.status = 'matched';
       card.status = 'matched';
@@ -119,6 +121,7 @@ export class GameComponent implements OnInit {
       }, 1000);
     }
 
+    // Finished the game
     if (this._matches === this.difficulty) {
       clearInterval(this._timer);
       this.success = true;
