@@ -13,7 +13,7 @@ import { MdToolbarModule, MdMenuModule, MdIconModule, MdButtonModule, MdSliderMo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkTableModule } from '@angular/cdk';
 
-import { AppComponent, LoginDialog } from './app.component';
+import { AppComponent } from './app.component';
 
 // Gesture Support for the Slider
 import 'hammerjs';
@@ -33,15 +33,16 @@ import { ExacttimePipe } from '../shared/pipes/exacttime.pipe';
 // Components
 import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginDialog,
     GameComponent,
     LeaderboardComponent,
     ShufflePipe,
-    ExacttimePipe
+    ExacttimePipe,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,8 +62,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     AngularFireOfflineModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService, DifficultyService, ShufflePipe, ExacttimePipe, LeaderboardComponent, ShareService],
+  providers: [AuthService, DifficultyService, ShufflePipe, ExacttimePipe, LeaderboardComponent, ShareService, LoginDialogComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialog]
+  entryComponents: [LoginDialogComponent]
 })
 export class AppModule { }

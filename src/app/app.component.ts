@@ -5,9 +5,10 @@ import { ShareService } from '../shared/services/share.service';
 
 import { AfoObjectObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 import * as firebase from 'firebase/app';
 
@@ -18,9 +19,10 @@ import * as firebase from 'firebase/app';
 })
 export class AppComponent {
   user;
+  title = 'Memory';
 
-  showLoginDialog(data = {}): MdDialogRef<LoginDialog> {
-    const dialogRef = this.dialog.open(LoginDialog, { data: data });
+  showLoginDialog(data = {}): MdDialogRef<LoginDialogComponent> {
+    const dialogRef = this.dialog.open(LoginDialogComponent, { data: data });
     return dialogRef;
   }
 
@@ -37,41 +39,5 @@ export class AppComponent {
     // It's needed to load the Social Network SDKs onload for preventing blocked pop-ups
     shareService.initNetwork('facebook');
     shareService.initNetwork('google');
-  }
-}
-
-
-@Component({
-  selector: 'login-dialog',
-  templateUrl: 'login-dialog.html',
-  styleUrls: ['login-dialog.scss']
-})
-export class LoginDialog {
-  constructor(
-      public dialogRef: MdDialogRef<LoginDialog>,
-      public auth: AuthService,
-      public leaderboard: LeaderboardComponent,
-      @Inject(MD_DIALOG_DATA) public data: any) {
-        auth.user.subscribe(userdata => {
-          this.user = userdata;
-        });
-      }
-
-  public user;
-
-  loginWithFacebook(data = {}): void {
-    this.auth.login('facebook').then(_ => {
-      this.leaderboard.addToLeaderboard(data);
-    });
-  }
-
-  loginWithGoogle(data = {}): void {
-    this.auth.login('google').then(_ => {
-      this.leaderboard.addToLeaderboard(data);
-    });
-  }
-
-  addToLeaderboard(data): void {
-    this.leaderboard.addToLeaderboard(data);
   }
 }

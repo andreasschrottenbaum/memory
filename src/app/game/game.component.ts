@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger, animateChild } from '@angular/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from '../app.component';
+//import { AppComponent } from '../app.component';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+
+import { MdDialog } from '@angular/material';
 
 import { DifficultyService } from '../../shared/services/difficulty.service';
 
@@ -18,6 +21,7 @@ import { Card } from '../../shared/classes/card';
   styleUrls: ['./game.component.scss'],
   animations: [
     // code from https://medium.com/@gerard.sans/angular-applying-motion-principles-to-a-list-d5cdd35c899e
+    // Currently not implemented due to cross-browser issues
     trigger('cards', [
       transition(':enter', [
         style({ transform: 'scale(0.5)', opacity: 0, left: 0 }),  // initial
@@ -54,12 +58,11 @@ export class GameComponent implements OnInit {
   public maxLevel = motives.length;
   public success: boolean;
 
-
-
-  constructor(public app: AppComponent,
+  constructor(public loginDialog: LoginDialogComponent,
               public difficultyService: DifficultyService,
               public shuffle: ShufflePipe,
-              public exacttime: ExacttimePipe) {
+              public exacttime: ExacttimePipe,
+              public dialog: MdDialog) {
     difficultyService.getDifficulty().subscribe(difficulty => {
       this.difficulty = difficulty;
     });
@@ -73,10 +76,11 @@ export class GameComponent implements OnInit {
     this.difficultyService.setDifficulty(this.difficulty);
     this._buildDeck();
   }
-
+/*
   login(): void {
+
     const dialogRef = this.app.showLoginDialog();
-  }
+  }*/
 
   // Main method for the game
   flipCard(card: Card): void {
@@ -131,14 +135,14 @@ export class GameComponent implements OnInit {
 
       this.time = -(60 * 60 * 1000) + exacttime;
 
-      const dialog = this.app.showLoginDialog({
+      const dialogRef = this.dialog.open(LoginDialogComponent, { data: {
         difficulty: this.difficulty,
         moves: this._moves,
         time: this.time,
         exacttime: this.exacttime.transform(this.time, true)
-      });
+      }});
 
-      dialog.afterClosed().subscribe(_ => { this._buildDeck(); });
+      dialogRef.afterClosed().subscribe(_ => { this._buildDeck(); });
     }
   }
 
