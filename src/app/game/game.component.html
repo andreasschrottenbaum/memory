@@ -11,7 +11,7 @@
 
 <md-grid-list cols="4" rowHeight="1:1">
   <md-grid-tile *ngFor="let card of deck | shuffle">
-    <button class="card {{card.status}}" (click)="flipCard(card)">
+    <button @cards class="card {{card.status}}" (click)="flipCard(card)">
       <span class="front">{{card.motive}}</span>
       <span class="back">❓</span>
     </button>

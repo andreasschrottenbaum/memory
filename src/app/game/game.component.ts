@@ -25,7 +25,7 @@ import { Card } from '../../shared/classes/card';
     trigger('cards', [
       transition(':enter', [
         style({ transform: 'scale(0.5)', opacity: 0, left: 0 }),  // initial
-        animate('1s 1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+        animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
           style({ transform: 'scale(1)', opacity: 1, left: '*' }))  // final
       ]),
       transition(':leave', [
