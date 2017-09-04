@@ -1,80 +1,92 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { Component, DebugElement } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { GameComponent } from './game/game.component';
-import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-
-import { ExacttimePipe } from '../shared/pipes/exacttime.pipe';
-import { ShufflePipe } from '../shared/pipes/shuffle.pipe';
+import { MdMenuModule, MdDialogModule } from '@angular/material';
 
 import { AuthService } from '../shared/services/auth.service';
 import { ShareService } from '../shared/services/share.service';
-import { DifficultyService } from '../shared/services/difficulty.service';
-
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireOfflineModule } from 'angularfire2-offline';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-
-import { CdkTableModule } from '@angular/cdk';
-import { MdMenuModule, MdSliderModule, MdTableModule, MdDialogModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-
-import { environment } from '../environments/environment';
+import { GameComponent } from './game/game.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
+  let compiled: DebugElement;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        GameComponent,
-        LeaderboardComponent,
-        ExacttimePipe,
-        ShufflePipe,
-        LoginDialogComponent
+        MockGameComponent, MockLeaderboardComponent
+      ],
+      providers: [
+        { provide: GameComponent },
+        { provide: LeaderboardComponent },
+        { provide: AuthService, useValue: AuthServiceStub },
+        { provide: ShareService, useValue: ShareServiceStub }
       ],
       imports: [
         MdMenuModule,
-        MdSliderModule,
-        MdTableModule,
         MdDialogModule,
-        FormsModule,
-        CdkTableModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        AngularFireOfflineModule,
-        AngularFireDatabaseModule
-      ],
-      providers: [
-        ExacttimePipe,
-        ShufflePipe,
-        AuthService,
-        ShareService,
-        DifficultyService,
-        LoginDialogComponent,
-        LeaderboardComponent
+        NoopAnimationsModule
       ]
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+    compiled = fixture.debugElement;
   });
 
+  it('should create the app', async(() => {
+    expect(app).toBeTruthy();
+  }));
+
   it(`should have as title 'Memory'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Memory');
   }));
 
   it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Memory');
+    expect(compiled.query(By.css('h1')).nativeElement.textContent).toBe('Memory');
+  }));
+
+  it('should have the title dynamically', async(() => {
+    app.title = 'Test Title';
+    fixture.detectChanges();
+    expect(compiled.query(By.css('h1')).nativeElement.textContent).toBe('Test Title');
+  }));
+
+  it('should render the menu button', async(() => {
+    fixture.detectChanges();
+    expect(compiled.query(By.css('md-icon')).nativeElement.textContent).toBe('more_vert');
   }));
 });
+
+// Mocks and Stubs
+@Component({
+  selector: 'app-game',
+  template: ''
+})
+class MockGameComponent {}
+
+@Component({
+  selector: 'app-leaderboard',
+  template: ''
+})
+class MockLeaderboardComponent {}
+
+const AuthServiceStub = {
+  user: {
+    subscribe: () => {}
+  }
+};
+
+const ShareServiceStub = {
+  initNetwork: () => {}
+};

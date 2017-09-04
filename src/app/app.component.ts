@@ -3,14 +3,9 @@ import { Component, Inject } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { ShareService } from '../shared/services/share.service';
 
-import { AfoObjectObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
-
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-
-import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +27,6 @@ export class AppComponent {
 
   constructor (private auth: AuthService,
   public dialog: MdDialog,
-  public afoDatabase: AngularFireOfflineDatabase,
   public shareService: ShareService) {
     auth.user.subscribe(userdata => this.user = userdata);
 
