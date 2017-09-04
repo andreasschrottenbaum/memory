@@ -76,11 +76,6 @@ export class GameComponent implements OnInit {
     this.difficultyService.setDifficulty(this.difficulty);
     this._buildDeck();
   }
-/*
-  login(): void {
-
-    const dialogRef = this.app.showLoginDialog();
-  }*/
 
   // Main method for the game
   flipCard(card: Card): void {
