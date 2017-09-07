@@ -34,12 +34,12 @@ describe('LeaderboardComponent', () => {
       ],
       providers: [
         { provide: ExacttimePipe, useValue: ExacttimePipeStub },
-        DifficultyService,
+        { provide: DifficultyService, useValue: DifficultyServiceStub },
         { provide: ShareService },
-        AngularFireDatabase,
+        { provide: AngularFireDatabase },
         { provide: AngularFireOfflineDatabase },
-        AngularFireAuth,
-        { provide: AngularFireOfflineDatabase, useValue: afoDatabase }
+        { provide: AngularFireAuth, useValue: AuthServiceStub },
+        { provide: AngularFireOfflineDatabase, useValue: afoDatabaseStub }
       ]
     })
     .compileComponents();
@@ -63,6 +63,18 @@ export class ExacttimePipeStub implements PipeTransform {
   transform: () => {}
 }
 
-const afoDatabase = {
+const afoDatabaseStub = {
   list: () => {}
+}
+
+const AuthServiceStub = {
+  user: {
+    subscribe: () => {}
+  }
+}
+
+const DifficultyServiceStub = {
+  getDifficulty: () => { return {
+    subscribe: () => { return 2 }
+  } }
 }
