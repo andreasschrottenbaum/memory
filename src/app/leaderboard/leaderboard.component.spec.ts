@@ -38,7 +38,8 @@ describe('LeaderboardComponent', () => {
         { provide: ShareService },
         AngularFireDatabase,
         { provide: AngularFireOfflineDatabase },
-        AngularFireAuth
+        AngularFireAuth,
+        { provide: AngularFireOfflineDatabase, useValue: afoDatabase }
       ]
     })
     .compileComponents();
@@ -60,4 +61,8 @@ describe('LeaderboardComponent', () => {
 })
 export class ExacttimePipeStub implements PipeTransform {
   transform: () => {}
+}
+
+const afoDatabase = {
+  list: () => {}
 }
