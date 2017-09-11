@@ -1,4 +1,4 @@
-import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pipe, PipeTransform } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -127,6 +127,23 @@ describe('GameComponent', () => {
     component.flipCard(c2);
 
     expect(c1.status).toBe('matched');
+  }));
+
+  it('should initialize with 0 moves', (async() => {
+    expect(component.moves).toBe(0);
+  }));
+
+  it('should increase the number of moves after every second card turn', (async() => {
+    let c1 = new Card();
+    let c2 = new Card();
+
+    c1.motive = 'a';
+    c2.motive = 'a';
+
+    component.flipCard(c1);
+    component.flipCard(c2);
+
+    expect(component.moves).toBe(1);
   }));
 
   // Removed for now, needs a better implementation

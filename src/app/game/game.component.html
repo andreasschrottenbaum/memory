@@ -3,10 +3,17 @@
     Schwierigkeit:
     <md-slider (change)="changeDifficulty()" [(ngModel)]="difficulty" min="2" max="{{maxLevel}}" step="2"></md-slider>
   </p>
-  <p>
-    Zeit:
-    <span id="timer">{{ time | exacttime:success }}</span>
-  </p>
+  <div class="timeAndMoves">
+    <p>
+      Zeit:
+      <span id="timer">{{ time | exacttime:success }}</span>
+    </p>
+    <p class="spacer"></p>
+    <p>
+      Züge:
+      {{ moves }}
+    </p>
+  </div>
 </div>
 
 <md-grid-list cols="4" rowHeight="1:1">

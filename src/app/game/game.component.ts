@@ -45,13 +45,13 @@ import { Card } from '../../shared/classes/card';
   ]
 })
 export class GameComponent implements OnInit {
-  private _moves: number;
   private _matches: number;
   private _currentCard: Card;
   private _locked: boolean;
   private _timer: any;
   private _starttime: Date;
 
+  public moves: number;
   public difficulty: number;
   public time: number = -(60 * 60 * 1000);
   public deck: Card[] = [];
@@ -98,7 +98,7 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    this._moves++;
+    this.moves++;
 
     // Match
     if (this._currentCard.motive === card.motive) {
@@ -132,7 +132,7 @@ export class GameComponent implements OnInit {
 
       const dialogRef = this.dialog.open(LoginDialogComponent, { data: {
         difficulty: this.difficulty,
-        moves: this._moves,
+        moves: this.moves,
         time: this.time,
         exacttime: this.exacttime.transform(this.time, true)
       }});
@@ -145,7 +145,7 @@ export class GameComponent implements OnInit {
     clearInterval(this._timer);
 
     // Reset internal variables
-    this._moves = 0;
+    this.moves = 0;
     this._matches = 0;
     this._currentCard = null;
     this._locked = false;
